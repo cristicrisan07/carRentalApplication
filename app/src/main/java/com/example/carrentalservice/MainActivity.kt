@@ -10,7 +10,10 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.android.volley.toolbox.StringRequest
+import com.example.carrentalservice.MySingleton.MySingleton.Companion.getInstance
 import com.example.carrentalservice.R
+import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -20,34 +23,58 @@ class MainActivity : AppCompatActivity() {
         val myButton=findViewById<Button>(R.id.button2)
         val myTxtLastName=findViewById<TextView>(R.id.last_name)
         val myTxtFirstName=findViewById<TextView>(R.id.firstName)
-        val myTxtPhone=findViewById<TextView>(R.id.phone_text)
         val myTxtPassword=findViewById<TextView>(R.id.password_text)
         val myTxtCNP=findViewById<TextView>(R.id.cnp_text)
         val myTxtAddress=findViewById<TextView>(R.id.address_text)
         val myTxtDriverLicense=findViewById<TextView>(R.id.expirationtime_text)
-
+        val myTxtEmail=findViewById<TextView>(R.id.email_text)
+        val myTxtUsername=findViewById<TextView>(R.id.username_text)
         myButton.setOnClickListener {
-            Validator.isValidName(myTxtLastName,true)
-            Validator.isValidName(myTxtFirstName,true)
-            Validator.isValidPassword(myTxtPassword,true)
-            Validator.isValidPhone(myTxtPhone,true)
-            Validator.isValidCNP(myTxtCNP,true)
+          //  Validator.isValidName(myTxtLastName,true)
+           // Validator.isValidName(myTxtFirstName,true)
+          //  Validator.isValidPassword(myTxtPassword,true)
+          //  Validator.isValidCNP(myTxtCNP,true)
             //Validator.isValidDriverLicense(myTxtDriverLicense,true)
-            Validator.isValidAddres(myTxtAddress,true)
-            if(Validator.isValidName(myTxtLastName,true)==true && Validator.isValidName(myTxtFirstName,true) &&  Validator.isValidPassword(myTxtPassword,true)
-                    && Validator.isValidPhone(myTxtPhone,true) && Validator.isValidCNP(myTxtCNP,true) && Validator.isValidAddres(myTxtAddress,true))
+            //Validator.isValidAddres(myTxtAddress,true)
+            if(Validator.isValidName(myTxtLastName,true) && Validator.isValidName(myTxtFirstName,true) && Validator.isValidPassword(myTxtPassword,true) && Validator.isValidCNP(myTxtCNP,true) && Validator.isValidAddres(myTxtAddress,true) && Validator.isValidEmail(myTxtEmail,true))
             {
+                val reg_url="http://34.107.31.239/register.php"
+                val stringRequest: StringRequest = object: StringRequest(
+                    Method.POST,
+                    reg_url,
+                    { response->
+                        val jsonarr= JSONArray(response)
+                        val jsonobj=jsonarr.getJSONObject(0)
+                        val code=jsonobj.getString("code")
+                        val msg=jsonobj.getString("message")
+                        Toast.makeText(this, "$code $msg",Toast.LENGTH_LONG).show()
+                    },
+                    {
+
+
+                    }){
+
+                    override fun getParams(): MutableMap<String, String> {
+                        val params=HashMap<String,String>()
+                        params.put("Last_name",myTxtLastName.text.toString())
+                        params.put("First_name",myTxtFirstName.text.toString())
+                        params.put("Address",myTxtAddress.text.toString())
+                        params.put("Dled",myTxtDriverLicense.text.toString())
+                        params.put("Password",myTxtPassword.text.toString())
+                        params.put("Email",myTxtEmail.text.toString())
+                        params.put("User_name",myTxtUsername.text.toString())
+                        params.put("Pic",myTxtCNP.text.toString())
+                        return params
+                    }
+
+                }
+
+                getInstance(this).addToRequestQueue(stringRequest)
                 val  intent=  Intent(this,SecondActivity::class.java)
                 startActivity(intent)
-                Toast.makeText(this,"The data has been saved",Toast.LENGTH_LONG).show();
+                
             }
-            myTxtLastName.text=" "
-            myTxtFirstName.text=" "
-            myTxtPhone.text=" "
-            myTxtPassword.text=" "
-            myTxtCNP.text=" "
-            myTxtAddress.text=" "
-            myTxtDriverLicense.text=" "
+
         }
     }
 

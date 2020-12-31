@@ -7,19 +7,18 @@
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="EV CHARGE STATION "
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarRentalService">
-        <activity android:name=".PanaitCernaCars"></activity>
-        <activity android:name=".TasnadCarsActivity" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
+        <activity android:name=".LoginActivity"></activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -30,7 +29,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBZltt0eHdMxjUclQxUkDB1sCFrnrlXc0s" />
+            android:value="AIzaSyBRYm53IOQdBTVdpirAXsX68x8SKhE8Xi8" />
 
         <activity
             android:name=".MapsActivity"

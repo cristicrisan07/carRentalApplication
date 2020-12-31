@@ -140,7 +140,7 @@ class Validator {
         fun isValidCNP(data: Any, updateUI: Boolean = true): Boolean {
             val str = getText(data)
             val valid = Patterns.PHONE.matcher(str).matches()
-            val validLength=str.trim().length <13
+            val validLength=str.trim().length <=13
 
             // Set error if required
             if (updateUI) {

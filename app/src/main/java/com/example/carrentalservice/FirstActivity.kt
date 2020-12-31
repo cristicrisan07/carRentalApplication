@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.carrentalservice.ui.login.LoginActivity
+import android.widget.Toast
+import com.android.volley.toolbox.StringRequest
 import com.example.carrentalservice.R
+import org.json.JSONArray
 
 
 class FirstActivity : AppCompatActivity() {
@@ -25,7 +27,7 @@ class FirstActivity : AppCompatActivity() {
         }
         buttonLogin.setOnClickListener {
             val  intent=  Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+           startActivity(intent)
         }
     }
 }
