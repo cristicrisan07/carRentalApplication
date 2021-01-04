@@ -45,7 +45,7 @@ class CustomAdapter(var context:Context,var car:ArrayList<Cars>):BaseAdapter() {
         viewHolder.ivImage.setImageResource(car.image)
         viewHolder.txtDescription.text=car.description
 
-        return  view as View
+        return view
     }
 
     override fun getItem(position: Int): Any {

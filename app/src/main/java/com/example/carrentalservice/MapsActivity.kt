@@ -1,5 +1,6 @@
 package com.example.carrentalservice
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -8,7 +9,11 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.android.volley.toolbox.StringRequest
 import com.example.carrentalservice.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -20,25 +25,65 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.IOException
+
+import kotlin.Exception
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerClickListener{
 
     private lateinit var mMap: GoogleMap
-    private lateinit var mMap1: GoogleMap
-    private lateinit var mMap2: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var lastLocation: Location
-
-
+    private lateinit var serverResponse:String
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+
+
+
+
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+
+          try{
+              val uID=this.intent.extras!!.get("user_id").toString()
+              findViewById<TextView>(R.id.notloggedin).text=""
+              val logUrl="http://34.107.31.239/UserSubsContr.php"
+              val stringRequest: StringRequest = object: StringRequest(Method.POST,
+                      logUrl,
+                      { response->
+
+                          serverResponse= response
+
+                      },
+                      {_->
+
+                          Toast.makeText(this,"nu a mers",Toast.LENGTH_LONG).show()
+                      }){
+
+                  override fun getParams(): MutableMap<String, String> {
+                      val params=HashMap<String,String>()
+                      params["user_id"] = uID
+
+                      return params
+                  }
+
+              }
+              MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
+          }
+          catch (excp:Exception){
+              findViewById<TextView>(R.id.notloggedin).text="Not logged in"
+          }
+
+
 
     }
 
@@ -54,18 +99,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
         setUpMap()
         val fantanele = LatLng(46.767243909964, 23.550879984745006)
         mMap.addMarker(MarkerOptions().position(fantanele).title("Strada Fantanele 7").snippet("3 cars available"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fantanele, 9.0f))
         mMap.getUiSettings().setZoomControlsEnabled(true)
         mMap.setOnMarkerClickListener(this)
-        mMap.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
-            val  intent=  Intent(this,SecondActivity::class.java)
-            startActivity(intent)
-        })
-       //mMap1 = googleMap
+
+        //mMap1 = googleMap
         val tasnad = LatLng(46.759767527708235, 23.546233828927765)
         mMap.addMarker(MarkerOptions().position(tasnad).title("Strada Tasnad 22").snippet("1 car available"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tasnad, 9.0f))
@@ -189,21 +230,84 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         mMap.getUiSettings().setZoomControlsEnabled(true)
         mMap.setOnMarkerClickListener(this)
 
-        val uniriiChinteni  = LatLng(46.863942329280185, 23.536021542319787)
+        val uniriiChinteni = LatLng(46.863942329280185, 23.536021542319787)
         mMap.addMarker(MarkerOptions().position(uniriiChinteni).title("Strada Unirii 12 Chinteni").snippet("2 cars available"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(uniriiChinteni, 9.0f))
         mMap.getUiSettings().setZoomControlsEnabled(true)
         mMap.setOnMarkerClickListener(this)
 
-        val piataMarasti  = LatLng(46.778751909106504, 23.614758227072144)
+        val piataMarasti = LatLng(46.778751909106504, 23.614758227072144)
         mMap.addMarker(MarkerOptions().position(piataMarasti).title("Piata Marasti").snippet("3 cars available"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(piataMarasti, 9.0f))
         mMap.getUiSettings().setZoomControlsEnabled(true)
         mMap.setOnMarkerClickListener(this)
 
+            mMap.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
+
+                if (findViewById<TextView>(R.id.notloggedin).text != "Not logged in") {
+                    var location = it.title.toString()
+                    val intent = Intent(this, SecondActivity::class.java)
+                    intent.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
+                    val logUrl = "http://34.107.31.239/retrieveCars.php"
+
+
+                    val stringRequest: StringRequest = object : StringRequest(Method.POST,
+                            logUrl,
+                            { response ->
+
+                                if (response != "There are no cars available at this location") {
+
+                                    if (response != "No such address!") {
+                                        val jsonarr = JSONArray(response)
+                                        val jsonobj = ArrayList<JSONObject>()
+                                        for (i in 0 until jsonarr.length()) {
+                                            jsonobj.add(jsonarr.getJSONObject(i))
+                                        }
+                                        for (i in 0 until jsonobj.size) {
+                                            intent.putExtra(i.toString(), jsonobj[i].getString("VIN"))
+                                        }
+
+                                        startActivityForResult(intent, LAUNCH_CAR_LIST)
+                                    } else {
+                                        Toast.makeText(applicationContext, "Wrong address. Check code!", Toast.LENGTH_LONG).show()
+                                    }
+                                } else {
+                                    Toast.makeText(applicationContext, "There are no cars available at this location", Toast.LENGTH_LONG).show()
+                                }
+                            },
+                            { _ ->
+
+                                Toast.makeText(this, "Unable to retrieve data for this location. Contact support!", Toast.LENGTH_LONG).show()
+                            }) {
+
+                        override fun getParams(): MutableMap<String, String> {
+                            val params = HashMap<String, String>()
+                            params["Location"] = location
+                            return params
+                        }
+
+                    }
+                    MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
+
+                }
+                else{
+                   var nextAct=Intent(this,LoginActivity::class.java)
+                    Toast.makeText(applicationContext,"Please log in or register to see the available cars.",Toast.LENGTH_LONG).show()
+                    startActivity(nextAct)
+                    this.finish()
+                }
+            })
+        val userMenu=findViewById<ImageButton>(R.id.userMenuLoader)
+        userMenu.setOnClickListener {
+             val nextAct=Intent(this,UserMenu::class.java)
+             nextAct.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
+        }
     }
+
+
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+        private const val LAUNCH_CAR_LIST=2
     }
 
     private fun setUpMap() {
@@ -217,4 +321,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
 
     override fun onMarkerClick(p0: Marker?)=false
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    if(requestCode==LAUNCH_CAR_LIST)
+    {
+        if(resultCode==Activity.RESULT_OK)
+        {
+              if(JSONArray(serverResponse).getJSONObject(1).getString("agreeStatus")!="carRented")
+              {
+                  serverResponse.replace("nocarRented","carRented")
+             val da=1
+              }
+        }
+    }
+
+    }
 }

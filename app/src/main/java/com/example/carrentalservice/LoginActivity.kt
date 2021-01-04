@@ -1,5 +1,6 @@
 package com.example.carrentalservice
 
+import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +14,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         val loginBtn=findViewById<Button>(R.id.loginBtn)
         loginBtn.setOnClickListener {
             val username=findViewById<TextView>(R.id.userInsert)
@@ -23,15 +25,26 @@ class LoginActivity : AppCompatActivity() {
             val stringRequest: StringRequest = object: StringRequest(Method.POST,
                     logUrl,
                     { response->
+
                         val jsonarr= JSONArray(response)
                         val jsonobj=jsonarr.getJSONObject(0)
+                        if(jsonobj.getString("code")=="logged_in") {
                         val firstName=jsonobj.getString("first_name")
                         val lastName=jsonobj.getString("last_name")
-                        if(jsonobj.getString("code")=="logged_in") {
+                        val userID=jsonobj.getString("user_id")
 
-                                Toast.makeText(this,"Welcome $firstName $lastName",Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@LoginActivity,"Welcome $firstName $lastName",Toast.LENGTH_LONG).show()
                                    val intent= Intent(this,MapsActivity::class.java)
+                            intent.putExtra("user_id", userID)
                             startActivity(intent)
+                        }
+                        else{
+                            if(jsonobj.getString("code")=="login_failed")
+                            {
+                                Toast.makeText(this@LoginActivity,"Incorrect username or password!",Toast.LENGTH_LONG).show()
+                                username.text = ""
+                                password.text= ""
+                            }
                         }
 
                     },

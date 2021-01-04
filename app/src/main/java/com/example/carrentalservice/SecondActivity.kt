@@ -1,5 +1,7 @@
 package com.example.carrentalservice
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.AdapterView
@@ -11,18 +13,49 @@ import com.google.android.gms.common.util.Strings
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class SecondActivity : AppCompatActivity() {
+    val LAUNCH_CONTRACT_WRITER=1
+    var resultIntent=Intent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
-        var  listView=findViewById(R.id.listView) as ListView
-        var arrCar:ArrayList<Cars> =  ArrayList()
-        arrCar.add(Cars("Skoda 2016",R.drawable.skoda,"3 litri ramasi"))
-        arrCar.add(Cars("Toyota Auris 2017",R.drawable.toyota,"2 litri ramasi"))
-        arrCar.add(Cars("Toyota Prius 2016",R.drawable.toyota_prius,"1 litru ramas"))
+        var listView = findViewById(R.id.listView) as ListView
+        var arrCar: ArrayList<Cars> = ArrayList()
 
-        listView.adapter=CustomAdapter(applicationContext,arrCar)
+        for (i in 0 until (this.intent.extras?.size()!!-1)) {
+            arrCar.add(Cars(this.intent.extras!!.get(i.toString()) as String, R.drawable.skoda, "ceva ceva"))
+        }
 
+        listView.adapter = CustomAdapter(applicationContext, arrCar)
+        listView.setOnItemClickListener { _, _, position, _ ->
+
+           val nextIntent = Intent(this, ContractWriter::class.java)
+            nextIntent.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
+            nextIntent.putExtra("VIN", (listView.adapter.getItem(position) as Cars).name)
+
+            startActivityForResult(nextIntent,LAUNCH_CONTRACT_WRITER)
+
+
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    if(requestCode==LAUNCH_CONTRACT_WRITER)
+    {
+        if(resultCode== Activity.RESULT_OK)
+        {
+            resultIntent.putExtra("code",data!!.getStringExtra("code").toString())
+            setResult(Activity.RESULT_OK,resultIntent)
+            this.finish()
+        }
+        else {
+            resultIntent.putExtra("code",data!!.getStringExtra("code").toString())
+            setResult(Activity.RESULT_CANCELED,resultIntent)
+            this.finish()
+        }
+    }
     }
 }
+

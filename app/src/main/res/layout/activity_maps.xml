@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<fragment
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
@@ -7,3 +11,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapsActivity" />
+
+    <TextView
+        android:id="@+id/notloggedin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/userMenuLoader"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginBottom="22dp"
+        app:srcCompat="@drawable/login" />
+
+</RelativeLayout>
