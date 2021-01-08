@@ -43,9 +43,11 @@ class MainActivity : AppCompatActivity() {
                         val code=jsonobj.getString("code")
                         val msg=jsonobj.getString("message")
                         Toast.makeText(this, "$code $msg",Toast.LENGTH_LONG).show()
-                        val  intent=  Intent(this,LoginActivity::class.java)
-                        startActivity(intent)
-                    },
+                        if(code!="reg_failed") {
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
+                        },
                     {
 
 
