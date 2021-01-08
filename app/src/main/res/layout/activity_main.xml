@@ -261,12 +261,12 @@
 
     <TextView
         android:id="@+id/haveAcc"
-        android:layout_width="182dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="864dp"
-        android:layout_marginEnd="472dp"
-        android:layout_marginRight="472dp"
-        android:text="Have an account? Log in"
+        android:layout_width="236dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="860dp"
+        android:layout_marginEnd="452dp"
+        android:layout_marginRight="452dp"
+        android:text="Already have an account? Log in"
         android:textAllCaps="true"
         android:textColor="#090909"
         android:textSize="12sp"
