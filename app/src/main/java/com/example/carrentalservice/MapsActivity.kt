@@ -31,58 +31,52 @@ import java.io.IOException
 
 import kotlin.Exception
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerClickListener{
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var serverResponse:String
-    
+    private lateinit var serverResponse: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
 
-
-
-
-
         val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+                .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
 
-          try{
-              val uID=this.intent.extras!!.get("user_id").toString()
-              findViewById<TextView>(R.id.notloggedin).text=""
-              val logUrl="http://34.107.31.239/UserSubsContr.php"
-              val stringRequest: StringRequest = object: StringRequest(Method.POST,
-                      logUrl,
-                      { response->
+        try {
+            val uID = this.intent.extras!!.get("user_id").toString()
+            findViewById<TextView>(R.id.notloggedin).text = ""
+            val logUrl = "http://34.107.31.239/UserSubsContr.php"
+            val stringRequest: StringRequest = object : StringRequest(Method.POST,
+                    logUrl,
+                    { response ->
 
-                          serverResponse= response
+                        serverResponse = response
 
-                      },
-                      {_->
+                    },
+                    { _ ->
 
-                          Toast.makeText(this,"nu a mers",Toast.LENGTH_LONG).show()
-                      }){
+                        Toast.makeText(this, "nu a mers", Toast.LENGTH_LONG).show()
+                    }) {
 
-                  override fun getParams(): MutableMap<String, String> {
-                      val params=HashMap<String,String>()
-                      params["user_id"] = uID
+                override fun getParams(): MutableMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params["user_id"] = uID
 
-                      return params
-                  }
+                    return params
+                }
 
-              }
-              MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
-          }
-          catch (excp:Exception){
-              findViewById<TextView>(R.id.notloggedin).text="Not logged in"
-          }
-
+            }
+            MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
+        } catch (excp: Exception) {
+            findViewById<TextView>(R.id.notloggedin).text = "Not logged in"
+        }
 
 
     }
@@ -242,99 +236,103 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         mMap.getUiSettings().setZoomControlsEnabled(true)
         mMap.setOnMarkerClickListener(this)
 
-            mMap.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
+        mMap.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
 
-                if (findViewById<TextView>(R.id.notloggedin).text != "Not logged in") {
-                    var location = it.title.toString()
-                    val intent = Intent(this, SecondActivity::class.java)
-                    intent.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
-                    val logUrl = "http://34.107.31.239/retrieveCars.php"
+            if (findViewById<TextView>(R.id.notloggedin).text != "Not logged in") {
+                var location = it.title.toString()
+                val intent = Intent(this, SecondActivity::class.java)
+                intent.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
+                val logUrl = "http://34.107.31.239/retrieveCars.php"
 
 
-                    val stringRequest: StringRequest = object : StringRequest(Method.POST,
-                            logUrl,
-                            { response ->
+                val stringRequest: StringRequest = object : StringRequest(Method.POST,
+                        logUrl,
+                        { response ->
 
-                                if (response != "There are no cars available at this location") {
+                            if (response != "There are no cars available at this location") {
 
-                                    if (response != "No such address!") {
-                                        val jsonarr = JSONArray(response)
-                                        val jsonobj = ArrayList<JSONObject>()
-                                        for (i in 0 until jsonarr.length()) {
-                                            jsonobj.add(jsonarr.getJSONObject(i))
-                                        }
-                                        for (i in 0 until jsonobj.size) {
-                                            intent.putExtra(i.toString(), jsonobj[i].getString("VIN"))
-                                        }
-
-                                        startActivityForResult(intent, LAUNCH_CAR_LIST)
-                                    } else {
-                                        Toast.makeText(applicationContext, "Wrong address. Check code!", Toast.LENGTH_LONG).show()
+                                if (response != "No such address!") {
+                                    val jsonarr = JSONArray(response)
+                                    val jsonobj = ArrayList<JSONObject>()
+                                    for (i in 0 until jsonarr.length()) {
+                                        jsonobj.add(jsonarr.getJSONObject(i))
                                     }
+                                    for (i in 0 until jsonobj.size) {
+                                        intent.putExtra(i.toString(), jsonobj[i].getString("VIN"))
+                                    }
+
+                                    startActivityForResult(intent, LAUNCH_CAR_LIST)
                                 } else {
-                                    Toast.makeText(applicationContext, "There are no cars available at this location", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(applicationContext, "Wrong address. Check code!", Toast.LENGTH_LONG).show()
                                 }
-                            },
-                            { _ ->
+                            } else {
+                                Toast.makeText(applicationContext, "There are no cars available at this location", Toast.LENGTH_LONG).show()
+                            }
+                        },
+                        { _ ->
 
-                                Toast.makeText(this, "Unable to retrieve data for this location. Contact support!", Toast.LENGTH_LONG).show()
-                            }) {
+                            Toast.makeText(this, "Unable to retrieve data for this location. Contact support!", Toast.LENGTH_LONG).show()
+                        }) {
 
-                        override fun getParams(): MutableMap<String, String> {
-                            val params = HashMap<String, String>()
-                            params["Location"] = location
-                            return params
-                        }
-
+                    override fun getParams(): MutableMap<String, String> {
+                        val params = HashMap<String, String>()
+                        params["Location"] = location
+                        return params
                     }
-                    MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
 
                 }
-                else{
-                   var nextAct=Intent(this,LoginActivity::class.java)
-                    Toast.makeText(applicationContext,"Please log in or register to see the available cars.",Toast.LENGTH_LONG).show()
-                    startActivity(nextAct)
-                    this.finish()
-                }
-            })
-        val userMenu=findViewById<ImageButton>(R.id.userMenuLoader)
+                MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
+
+            } else {
+                var nextAct = Intent(this, LoginActivity::class.java)
+                Toast.makeText(applicationContext, "Please log in or register to see the available cars.", Toast.LENGTH_LONG).show()
+                startActivity(nextAct)
+                this.finish()
+            }
+        })
+
+        val userMenu = findViewById<ImageButton>(R.id.userMenuLoader)
+
         userMenu.setOnClickListener {
-             val nextAct=Intent(this,UserMenu::class.java)
-             nextAct.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
+            val nextAct = Intent(this, UserMenu::class.java)
+            nextAct.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
+            nextAct.putExtra("firstName", this.intent.extras!!.get("firstName").toString())
+            nextAct.putExtra("lastName", this.intent.extras!!.get("lastName").toString())
+            nextAct.putExtra("serverResponse", serverResponse)
+            startActivityForResult(nextAct, LAUNCH_USER_MENU)
         }
     }
 
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
-        private const val LAUNCH_CAR_LIST=2
+        private const val LAUNCH_CAR_LIST = 2
+        private const val LAUNCH_USER_MENU = 3
     }
 
     private fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
             return
         }
     }
 
-    override fun onMarkerClick(p0: Marker?)=false
+    override fun onMarkerClick(p0: Marker?) = false
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-    if(requestCode==LAUNCH_CAR_LIST)
-    {
-        if(resultCode==Activity.RESULT_OK)
-        {
-              if(JSONArray(serverResponse).getJSONObject(1).getString("agreeStatus")!="carRented")
-              {
-                  serverResponse.replace("nocarRented","carRented")
-             val da=1
-              }
+        if (requestCode == LAUNCH_CAR_LIST) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (JSONArray(serverResponse).getJSONObject(1).getString("agreeStatus") != "carRented") {
+                    serverResponse = serverResponse.replace("nocarRented", "carRented")
+                }
+            }
+        } else {
+            TODO("Set behaviour in case of new subscription added")
         }
-    }
 
     }
 }

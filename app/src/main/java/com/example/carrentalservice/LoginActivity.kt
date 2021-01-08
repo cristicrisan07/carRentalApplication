@@ -36,6 +36,8 @@ class LoginActivity : AppCompatActivity() {
                                 Toast.makeText(this@LoginActivity,"Welcome $firstName $lastName",Toast.LENGTH_LONG).show()
                                    val intent= Intent(this,MapsActivity::class.java)
                             intent.putExtra("user_id", userID)
+                            intent.putExtra("firstName",firstName)
+                            intent.putExtra("lastName",lastName)
                             startActivity(intent)
                         }
                         else{

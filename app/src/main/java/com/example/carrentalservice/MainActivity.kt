@@ -30,12 +30,7 @@ class MainActivity : AppCompatActivity() {
         val myTxtEmail=findViewById<TextView>(R.id.email_text)
         val myTxtUsername=findViewById<TextView>(R.id.username_text)
         myButton.setOnClickListener {
-          //  Validator.isValidName(myTxtLastName,true)
-           // Validator.isValidName(myTxtFirstName,true)
-          //  Validator.isValidPassword(myTxtPassword,true)
-          //  Validator.isValidCNP(myTxtCNP,true)
-            //Validator.isValidDriverLicense(myTxtDriverLicense,true)
-            //Validator.isValidAddres(myTxtAddress,true)
+
             if(Validator.isValidName(myTxtLastName,true) && Validator.isValidName(myTxtFirstName,true) && Validator.isValidPassword(myTxtPassword,true) && Validator.isValidCNP(myTxtCNP,true) && Validator.isValidAddres(myTxtAddress,true) && Validator.isValidEmail(myTxtEmail,true))
             {
                 val reg_url="http://34.107.31.239/register.php"
@@ -48,6 +43,8 @@ class MainActivity : AppCompatActivity() {
                         val code=jsonobj.getString("code")
                         val msg=jsonobj.getString("message")
                         Toast.makeText(this, "$code $msg",Toast.LENGTH_LONG).show()
+                        val  intent=  Intent(this,LoginActivity::class.java)
+                        startActivity(intent)
                     },
                     {
 
@@ -70,8 +67,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 getInstance(this).addToRequestQueue(stringRequest)
-                val  intent=  Intent(this,SecondActivity::class.java)
-                startActivity(intent)
+
                 
             }
 
