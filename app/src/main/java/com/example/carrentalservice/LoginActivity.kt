@@ -16,6 +16,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val loginBtn=findViewById<Button>(R.id.loginBtn)
+        val dontHaveAcc=findViewById<TextView>(R.id.noAccTxt)
+        dontHaveAcc.setOnClickListener {
+            val intent =Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
         loginBtn.setOnClickListener {
             val username=findViewById<TextView>(R.id.userInsert)
             val password=findViewById<TextView>(R.id.passInsert)

@@ -46,14 +46,15 @@
         android:layout_marginRight="3dp"
         android:layout_marginBottom="155dp"
         android:rotationY="40"
+        android:stateListAnimator="@null"
         android:text="r\ne\ng\ni\ns\nt\ne\nr"
         app:backgroundTint="#009933"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:stateListAnimator="@null"/>
+        app:layout_constraintVertical_bias="0.428" />
 
     <Button
         android:id="@+id/button_login"
@@ -66,14 +67,15 @@
         android:layout_marginRight="-1dp"
         android:layout_marginBottom="156dp"
         android:rotationY="-40"
+        android:stateListAnimator="@null"
         android:text="L\no\ng\ni\nn"
         app:backgroundTint="#009933"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/searchImg"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:stateListAnimator="@null" />
+        app:layout_constraintVertical_bias="0.436" />
 
     <ImageView
         android:id="@+id/imageView2"
