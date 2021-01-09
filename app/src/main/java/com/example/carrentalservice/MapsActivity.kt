@@ -114,11 +114,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         mMap.setOnMarkerClickListener {
 
             if (findViewById<TextView>(R.id.notloggedin).text != "Not logged in") {
-                var location = it.title.toString()
-                val intent = Intent(this, SecondActivity::class.java)
-                intent.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
-                val logUrl = "http://34.107.31.239/retrieveCars.php"
 
+                val logUrl = "http://34.107.31.239/retrieveCars.php"
+                var location = it.title.toString()
 
                 val stringRequest: StringRequest = object : StringRequest(Method.POST,
                         logUrl,
@@ -169,7 +167,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tasnad, 9.0f))
 
 
-        //mMap2 = googleMap
+
         val panaitCerna = LatLng(46.561091141191454, 23.776674811718117)
         mMap.addMarker(MarkerOptions().position(panaitCerna).title("Strada Panait Cerna"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(panaitCerna, 9.0f))
@@ -274,6 +272,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         mMap.setOnInfoWindowClickListener {
 
 
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
             if (carQuery != "There are no cars available at this location") {
 
                 if (carQuery != "No such address!") {
@@ -287,6 +287,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
                     }
 
                     startActivityForResult(intent, LAUNCH_CAR_LIST)
+                    this.finish()
                 } else {
                     Toast.makeText(applicationContext, "Wrong address. Check code!", Toast.LENGTH_LONG).show()
                 }
