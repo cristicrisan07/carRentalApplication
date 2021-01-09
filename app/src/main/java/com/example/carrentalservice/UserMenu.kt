@@ -1,5 +1,6 @@
 package com.example.carrentalservice
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
@@ -24,6 +25,10 @@ class UserMenu : AppCompatActivity() {
         val subView=findViewById<TextView>(R.id.tw2)
         val contrView=findViewById<TextView>(R.id.tw3)
         var contrViewText:String?=null
+        subsbtn.setOnClickListener {
+            val intent =Intent(this,ChooseOptionActivity::class.java)
+            startActivity(intent)
+        }
         if(userStatus.getJSONObject(0).getString("subStatus")=="notSubscribed")
         {
         subViewText="No active subscription. \nPress the button on the right to see the offers -->>"

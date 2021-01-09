@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChooseOptionActivity">
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="2000dp"
+        android:layout_height="1178dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.501"
+        app:srcCompat="@drawable/green_gradient" />
+
+    <TextView
+        android:id="@+id/chooseOpTxt"
+        android:layout_width="310dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="336dp"
+        android:layout_marginEnd="832dp"
+        android:layout_marginRight="832dp"
+        android:text="Choose your option"
+        android:textAllCaps="true"
+        android:textColor="#171717"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+
+
+    <Button
+        android:id="@+id/get_btn"
+        android:layout_width="210dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="796dp"
+        android:layout_marginEnd="896dp"
+        android:layout_marginRight="896dp"
+        android:text="GET IT!"
+        android:textAllCaps="true"
+        android:textColor="#131313"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="360dp"
+        android:layout_height="152dp"
+        android:layout_marginTop="390dp"
+        android:layout_marginEnd="821dp"
+        android:layout_marginRight="821dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7">
+
+        <RadioButton
+            android:id="@+id/btn_22go"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="22 go"
+            android:textAllCaps="true"
+            android:textColor="#050505"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/btn_72go"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="72 go"
+            android:textAllCaps="true"
+            android:textColor="#0C0C0C"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/btn_honeyMoon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Honey Moon"
+            android:textAllCaps="true"
+            android:textColor="#151515"
+            android:textSize="20sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/details_22go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="612dp"
+        android:layout_marginEnd="920dp"
+        android:layout_marginRight="920dp"
+        android:text="Details about 22go? Click here"
+        android:textAllCaps="true"
+        android:textColor="#100F0F"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+    <TextView
+        android:id="@+id/details_72go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="660dp"
+        android:layout_marginEnd="924dp"
+        android:layout_marginRight="924dp"
+        android:text="Details about 72go?Click here"
+        android:textAllCaps="true"
+        android:textColor="#0B0A0A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+    <TextView
+        android:id="@+id/details_honey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="704dp"
+        android:layout_marginEnd="860dp"
+        android:layout_marginRight="860dp"
+        android:text="Details about Honey Moon?Click here"
+        android:textAllCaps="true"
+        android:textColor="#090909"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+</androidx.constraintlayout.widget.ConstraintLayout>
