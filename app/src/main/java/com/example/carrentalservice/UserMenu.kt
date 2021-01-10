@@ -7,8 +7,10 @@ import android.text.Html
 import android.view.View.INVISIBLE
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import org.json.JSONArray
 import java.sql.Date
+import kotlin.properties.Delegates
 import kotlin.random.Random
 
 class UserMenu : AppCompatActivity() {
@@ -27,11 +29,19 @@ class UserMenu : AppCompatActivity() {
         var contrViewText:String?=null
         subsbtn.setOnClickListener {
             val intent =Intent(this,ChooseOptionActivity::class.java)
+            intent.putExtra("uID",userID.toString())
             startActivity(intent)
+        }
+        val endBtn=findViewById<Button>(R.id.endBtn)
+        endBtn.setOnClickListener {
+             val delivered=Intent(this,MarkAsDelivered::class.java)
+            delivered.putExtra("map",this.intent.extras!!.get("map") as ArrayList<*>)
+            startActivityForResult(delivered, LAUNCH_MARK_AS_DELIVERED)
         }
         if(userStatus.getJSONObject(0).getString("subStatus")=="notSubscribed")
         {
         subViewText="No active subscription. \nPress the button on the right to see the offers -->>"
+
         }
         else{
 
@@ -40,7 +50,7 @@ class UserMenu : AppCompatActivity() {
             val expDate=userStatus.getJSONObject(0).getString("expirationDate")
             subViewText= "You have a $type subscription active until $expDate"
         }
-        val endBtn=findViewById<Button>(R.id.endBtn)
+
         if(userStatus.getJSONObject(1).getString("agreeStatus")=="nocarRented"){
             endBtn.visibility= INVISIBLE
             contrViewText="No car rented."
@@ -58,7 +68,14 @@ class UserMenu : AppCompatActivity() {
             carInfo=userStatus.getJSONObject(2)
             val departureLocation=carInfo.getString("departure")
             val rand= Random.nextInt(2,100)
-            val priceUntilNow=pricePerKm.toDouble() * rand
+            var priceUntilNow:String=(pricePerKm.toDouble() * rand).toString()
+
+            if(userStatus.getJSONObject(0).getString("subStatus")!="notSubscribed")
+            {
+                priceUntilNow=""
+            }
+
+
             contrViewText="You are driving:\n $manufacturer $model from $prodYear.\n " +
                     "You started your ride from: $departureLocation.\n" +
                     "Battery level: $batteryLevel% \n " +
@@ -68,5 +85,24 @@ class UserMenu : AppCompatActivity() {
         contrView.text=contrViewText
 
 
+    }
+    companion object {
+
+        private const val LAUNCH_MARK_AS_DELIVERED = 4
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    if(requestCode== LAUNCH_MARK_AS_DELIVERED){
+        if(resultCode==RESULT_OK){
+            Toast.makeText(applicationContext,"Thanks for choosing our services!",Toast.LENGTH_LONG).show()
+        }
+        else{
+
+        }
+    }
+        else{
+
+        }
     }
 }

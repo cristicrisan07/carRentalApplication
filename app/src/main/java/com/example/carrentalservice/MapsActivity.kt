@@ -1,6 +1,7 @@
 package com.example.carrentalservice
 
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -53,17 +54,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
                     { response ->
 
                         serverResponse = response
-                        val userMenu: ImageButton = findViewById(R.id.userMenu)
 
-
-                            userMenu.setOnClickListener {
-                                val nextAct = Intent(this, UserMenu::class.java)
-                                nextAct.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
-                                nextAct.putExtra("firstName", this.intent.extras!!.get("firstName").toString())
-                                nextAct.putExtra("lastName", this.intent.extras!!.get("lastName").toString())
-                                nextAct.putExtra("serverResponse", serverResponse)
-                                startActivityForResult(nextAct, LAUNCH_USER_MENU)
-                            }
 
                     },
                     { _ ->
@@ -102,11 +93,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
 
         mMap = googleMap
         setUpMap()
-
+        var locationList=ArrayList<MarkerOptions>()
 
         val fantanele = LatLng(46.767243909964, 23.550879984745006)
-        mMap.addMarker(MarkerOptions().position(fantanele).title("Strada Fantanele 7"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fantanele, 9.0f))
+        var mo=MarkerOptions().position(fantanele).title("Strada Fantanele 7")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
         mMap.getUiSettings().setZoomControlsEnabled(true)
 
         var carQuery: String? = null
@@ -163,117 +156,171 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
 
 
         val tasnad = LatLng(46.759767527708235, 23.546233828927765)
-        mMap.addMarker(MarkerOptions().position(tasnad).title("Strada Tasnad 22"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tasnad, 9.0f))
+        mo=MarkerOptions().position(tasnad).title("Strada Tasnad 22")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
 
         val panaitCerna = LatLng(46.561091141191454, 23.776674811718117)
-        mMap.addMarker(MarkerOptions().position(panaitCerna).title("Strada Panait Cerna"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(panaitCerna, 9.0f))
+        mo=MarkerOptions().position(panaitCerna).title("Strada Panait Cerna")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
 
         val fabrciiZahar = LatLng(46.78182783889745, 23.617740371255397)
-        mMap.addMarker(MarkerOptions().position(fabrciiZahar).title("Strada Fabricii de Zahar 12"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fabrciiZahar, 9.0f))
+        mo=MarkerOptions().position(fabrciiZahar).title("Strada Fabricii de Zahar 12")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
         val bucuresti88 = LatLng(46.78172687568074, 23.612289433290293)
-        mMap.addMarker(MarkerOptions().position(bucuresti88).title("Strada Bucuresti 88"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bucuresti88, 9.0f))
+        mo=MarkerOptions().position(bucuresti88).title("Strada Bucuresti 88")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val campuPainii = LatLng(46.78539135725131, 23.612882689707682)
-        mMap.addMarker(MarkerOptions().position(campuPainii).title("Strada Campu Painii-Clujana"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(campuPainii, 9.0f))
+        mo=MarkerOptions().position(campuPainii).title("Strada Campu Painii-Clujana")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
         val dunarii143 = LatLng(46.77839537533261, 23.641314882591903)
-        mMap.addMarker(MarkerOptions().position(dunarii143).title("Strada Dunarii 143-147"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(dunarii143, 9.0f))
-
+        mo=MarkerOptions().position(dunarii143).title("Strada Dunarii 143-147")
+        mMap.addMarker(mo)
+        locationList.add(mo)
 
         val ceanuMare = LatLng(46.65049992318051, 23.96709612381386)
-        mMap.addMarker(MarkerOptions().position(ceanuMare).title("Ceanu Mare"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ceanuMare, 9.0f))
+        mo=MarkerOptions().position(ceanuMare).title("Ceanu Mare")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val transilvaniei48_aiud = LatLng(46.31248684080088, 23.722609760352604)
-        mMap.addMarker(MarkerOptions().position(transilvaniei48_aiud).title("Bulevardul Transilvaniei 48"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(transilvaniei48_aiud, 9.0f))
+mo=MarkerOptions().position(transilvaniei48_aiud).title("Bulevardul Transilvaniei 48")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val vasileGoldis_alba = LatLng(46.068075654973434, 23.55787160341144)
-        mMap.addMarker(MarkerOptions().position(vasileGoldis_alba).title("Strada Vasile Goldis  13"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vasileGoldis_alba, 9.0f))
+        mo=MarkerOptions().position(vasileGoldis_alba).title("Strada Vasile Goldis  13")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val piataRomanaBuc = LatLng(44.44425082651276, 26.098013419624767)
-        mMap.addMarker(MarkerOptions().position(piataRomanaBuc).title("Piata Romana "))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(piataRomanaBuc, 9.0f))
+        mo=MarkerOptions().position(piataRomanaBuc).title("Piata Romana ")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val sfintiiVoievozi_buc = LatLng(44.44716142492185, 26.087649363453632)
-        mMap.addMarker(MarkerOptions().position(sfintiiVoievozi_buc).title("Strada Sfintii Voievozi 61-47"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sfintiiVoievozi_buc, 9.0f))
+        mo=MarkerOptions().position(sfintiiVoievozi_buc).title("Strada Sfintii Voievozi 61-47")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val arculDeTriumf = LatLng(44.46616699207833, 26.0749831778645)
-        mMap.addMarker(MarkerOptions().position(arculDeTriumf).title("Bulevardul Marasti 2-14-Arcul de Triumf"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(arculDeTriumf, 9.0f))
+        mo=MarkerOptions().position(arculDeTriumf).title("Bulevardul Marasti 2-14-Arcul de Triumf")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
         val piata1848 = LatLng(46.17442340002705, 23.923152812703783)
-        mMap.addMarker(MarkerOptions().position(piata1848).title("Piata 1848"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(piata1848, 9.0f))
+        mo=MarkerOptions().position(piata1848).title("Piata 1848")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
         val vivoCj = LatLng(46.750984740425174, 23.53019201588635)
-        mMap.addMarker(MarkerOptions().position(vivoCj).title("VIVO Cluj"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vivoCj, 9.0f))
+        mo=MarkerOptions().position(vivoCj).title("VIVO Cluj")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val primariaFloresti = LatLng(46.743728752288945, 23.485590828065938)
-        mMap.addMarker(MarkerOptions().position(primariaFloresti).title("Strada Avram Iancu 170-Primaria Floresti"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(primariaFloresti, 9.0f))
+        mo=MarkerOptions().position(primariaFloresti).title("Strada Avram Iancu 170-Primaria Floresti")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
         val someseni = LatLng(46.77843598677337, 23.664690583329207)
-        mMap.addMarker(MarkerOptions().position(someseni).title("Calea Someseni"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(someseni, 9.0f))
+        mo=MarkerOptions().position(someseni).title("Calea Someseni")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val parcului7 = LatLng(46.787840614260176, 23.723763771834868)
-        mMap.addMarker(MarkerOptions().position(parcului7).title("Strada Parcului 7-Sannicoara"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(parcului7, 9.0f))
+       mo=MarkerOptions().position(parcului7).title("Strada Parcului 7-Sannicoara")
+        mMap.addMarker(mo)
+        locationList.add(mo)
 
 
         val vlahuta30_40 = LatLng(46.769950068812186, 23.558306680459335)
-        mMap.addMarker(MarkerOptions().position(vlahuta30_40).title("Strada Vlahuta 30-40"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vlahuta30_40, 9.0f))
+       mo=MarkerOptions().position(vlahuta30_40).title("Strada Vlahuta 30-40")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val piataUnirii = LatLng(44.46616699207833, 26.0749831778645)
-        mMap.addMarker(MarkerOptions().position(piataUnirii).title("Piata Unirii"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(piataUnirii, 9.0f))
+        mo=MarkerOptions().position(piataUnirii).title("Piata Unirii")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val plopilor71_67 = LatLng(46.762982001174365, 23.561061706203994)
-        mMap.addMarker(MarkerOptions().position(plopilor71_67).title("Strada Plopilor 71-67"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(plopilor71_67, 9.0f))
+        mo=MarkerOptions().position(plopilor71_67).title("Strada Plopilor 71-67")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val uniriiChinteni = LatLng(46.863942329280185, 23.536021542319787)
-        mMap.addMarker(MarkerOptions().position(uniriiChinteni).title("Strada Unirii 12 Chinteni"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(uniriiChinteni, 9.0f))
+       mo=MarkerOptions().position(uniriiChinteni).title("Strada Unirii 12 Chinteni")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
 
 
         val piataMarasti = LatLng(46.778751909106504, 23.614758227072144)
-        mMap.addMarker(MarkerOptions().position(piataMarasti).title("Piata Marasti"))
+        mo=MarkerOptions().position(piataMarasti).title("Piata Marasti")
+        mMap.addMarker(mo)
+        locationList.add(mo)
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(piataMarasti, 9.0f))
 
+        val userMenu: ImageButton = findViewById(R.id.userMenu)
+
+
+        userMenu.setOnClickListener {
+            val nextAct = Intent(this, UserMenu::class.java)
+            nextAct.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
+            nextAct.putExtra("firstName", this.intent.extras!!.get("firstName").toString())
+            nextAct.putExtra("lastName", this.intent.extras!!.get("lastName").toString())
+            nextAct.putExtra("serverResponse", serverResponse)
+            nextAct.putExtra("map",locationList)
+            startActivityForResult(nextAct, LAUNCH_USER_MENU)
+        }
 
         mMap.setOnInfoWindowClickListener {
 
-
             val intent = Intent(this, SecondActivity::class.java)
             intent.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
+            intent.putExtra("isSubscribed",JSONArray(serverResponse).getJSONObject(0).getString("subStatus")=="notSubscribed")
             if (carQuery != "There are no cars available at this location") {
 
                 if (carQuery != "No such address!") {
@@ -284,10 +331,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
                     }
                     for (i in 0 until jsonobj.size) {
                         intent.putExtra(i.toString(), jsonobj[i].getString("VIN"))
+                        intent.putExtra("manufacturer$i", jsonobj[i].getString("manufacturer"))
+                        intent.putExtra("model$i", jsonobj[i].getString("model"))
+                        intent.putExtra("Year$i", jsonobj[i].getString("Year"))
+                        intent.putExtra("Price$i", jsonobj[i].getString("Price"))
+                        intent.putExtra("Battery$i", jsonobj[i].getString("Battery"))
+                        intent.putExtra("nrOfCars",jsonobj.size)
+                        intent.putExtra("hasCar",JSONArray(serverResponse).getJSONObject(1).getString("agreeStatus"))
                     }
 
                     startActivityForResult(intent, LAUNCH_CAR_LIST)
-                    this.finish()
+                    it.hideInfoWindow()
+
                 } else {
                     Toast.makeText(applicationContext, "Wrong address. Check code!", Toast.LENGTH_LONG).show()
                 }
@@ -295,9 +350,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
                 Toast.makeText(applicationContext, "There are no cars available at this location", Toast.LENGTH_LONG).show()
             }
 
-
         }
-
 
     }
 
@@ -319,17 +372,38 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
 
     override fun onMarkerClick(p0: Marker?) = false
 
+private fun refreshUserInfo(){
+    val uID = this.intent.extras!!.get("user_id").toString()
+    val logUrl = "http://34.107.31.239/UserSubsContr.php"
+    val stringRequest: StringRequest = object : StringRequest(Method.POST,
+            logUrl,
+            { response ->
+                serverResponse = response
+            },
+            { _ ->
+                Toast.makeText(this, "nu a mers", Toast.LENGTH_LONG).show()
+            }) {
 
+        override fun getParams(): MutableMap<String, String> {
+            val params = HashMap<String, String>()
+            params["user_id"] = uID
+
+            return params
+        }
+
+    }
+    MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
+}
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == LAUNCH_CAR_LIST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (JSONArray(serverResponse).getJSONObject(1).getString("agreeStatus") != "carRented") {
-                    serverResponse = serverResponse.replace("nocarRented", "carRented")
+                   refreshUserInfo()
                 }
             }
         } else {
-            TODO("Set behaviour in case of new subscription added")
+            refreshUserInfo()
         }
 
     }

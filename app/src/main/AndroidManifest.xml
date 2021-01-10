@@ -17,7 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarRentalService">
-        <activity android:name=".Details_HoneyMoon"></activity>
+        <activity android:name=".MarkAsDelivered">
+      <!--  android:theme="@android:style/Theme.Holo.Dialog"-->
+
+        </activity>
+        <activity android:name=".Details_HoneyMoon" />
         <activity android:name=".Details_72go" />
         <activity android:name=".Details_22go" />
         <activity android:name=".ChooseOptionActivity" />

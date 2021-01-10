@@ -11,15 +11,18 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class ContractWriter : AppCompatActivity() {
-    var resultIntent=Intent()
+    //var resultIntent=Intent()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_contract_writer)
+      //  setContentView(R.layout.activity_contract_writer)
 
 
 
-       val rentBtn=findViewById<Button>(R.id.rentBtn)
-        rentBtn.setOnClickListener {
+
+        this.intent.putExtra("code","mindChange")
+        //setResult(Activity.RESULT_CANCELED,resultIntent)
+        setResult(Activity.RESULT_CANCELED,this.intent)
+
 
             val vin=this.intent.extras!!.get("VIN").toString()
             val id= this.intent.extras!!.get("user_id").toString()
@@ -29,15 +32,20 @@ class ContractWriter : AppCompatActivity() {
                     {
                         Toast.makeText(applicationContext,"You have successfully rented this car",Toast.LENGTH_LONG).show()
 
-                        resultIntent.putExtra("code","carWasRented")
-                        setResult(Activity.RESULT_OK,resultIntent)
+                      //  resultIntent.putExtra("code","carWasRented")
+                      //  setResult(Activity.RESULT_OK,resultIntent)
+                        this.intent.putExtra("code","carWasRented")
+                          setResult(Activity.RESULT_OK,this.intent)
                     this.finish()
                     },
                     { _ ->
 
                         Toast.makeText(this, "An error occured. Check rental log!", Toast.LENGTH_LONG).show()
-                        resultIntent.putExtra("code","ERROR")
-                        setResult(Activity.RESULT_CANCELED,resultIntent)
+                       // resultIntent.putExtra("code","ERROR")
+                       // setResult(Activity.RESULT_CANCELED,resultIntent)
+                        this.intent.putExtra("code","ERROR")
+                        setResult(Activity.RESULT_CANCELED,this.intent)
+                        this.finish()
                     }) {
 
                 override fun getParams(): MutableMap<String, String> {
@@ -50,8 +58,5 @@ class ContractWriter : AppCompatActivity() {
             }
             MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
         }
-
-
-    }
 
 }
