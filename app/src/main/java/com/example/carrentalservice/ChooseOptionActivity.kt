@@ -1,5 +1,6 @@
 package com.example.carrentalservice
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -53,6 +54,8 @@ class ChooseOptionActivity : AppCompatActivity() {
                     logUrl,
                     { response ->
                         Toast.makeText(applicationContext, "Your have successfully subscribed!", Toast.LENGTH_LONG).show()
+                        this.intent.putExtra("type",type)
+                        setResult(Activity.RESULT_OK,this.intent)
                         this.finish()
                     },
                     { _ ->

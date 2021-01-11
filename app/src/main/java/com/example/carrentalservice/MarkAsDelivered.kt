@@ -1,10 +1,13 @@
 package com.example.carrentalservice
 
+import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.app.ActivityCompat
+import com.android.volley.toolbox.StringRequest
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -13,6 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.delay
 
 class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -29,6 +33,7 @@ class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMark
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        this.setFinishOnTouchOutside(false)
     }
     /**
      * Manipulates the map once available.
@@ -47,7 +52,47 @@ class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMark
         for(marker:MarkerOptions in markersDetails){
             mMap.addMarker(marker)
         }
+        mMap.getUiSettings().setZoomControlsEnabled(true)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markersDetails[markersDetails.size-1].position, 9.0f))
+
+        mMap.setOnInfoWindowClickListener {
+            val location=it.title
+            if(this.intent.extras!!.get("subscription").toString()!="isSubscribed"){
+                Toast.makeText(applicationContext,"You will be redirected to the payment processor...",Toast.LENGTH_LONG).show()
+            }
+            val uID = this.intent.extras!!.get("uID").toString()
+            val VIN = this.intent.extras!!.get("VIN").toString()
+            val logUrl = "http://34.107.31.239/Park.php"
+            val stringRequest: StringRequest = object : StringRequest(Method.POST,
+                    logUrl,
+                    {response ->
+                        if(response=="Delivered!")
+                        {setResult(Activity.RESULT_OK)}
+                        else{
+                            if(response=="No such address!")
+                            {
+                                Toast.makeText(applicationContext,"No such address PHP error; contact support!",Toast.LENGTH_LONG).show()
+                                setResult(Activity.RESULT_CANCELED)
+                            }
+                        }
+                        this.finish()
+                    },
+                    {
+                        Toast.makeText(this, "Could not subscribe!", Toast.LENGTH_LONG).show()
+                    }) {
+
+                override fun getParams(): MutableMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params["idClient"]=uID
+                    params["location"]=location
+                    params["vin"]=VIN
+                    return params
+                }
+
+            }
+            MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
+        }
+
     }
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1

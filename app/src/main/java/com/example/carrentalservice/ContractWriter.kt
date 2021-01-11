@@ -11,16 +11,11 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class ContractWriter : AppCompatActivity() {
-    //var resultIntent=Intent()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      //  setContentView(R.layout.activity_contract_writer)
-
-
-
-
         this.intent.putExtra("code","mindChange")
-        //setResult(Activity.RESULT_CANCELED,resultIntent)
+
         setResult(Activity.RESULT_CANCELED,this.intent)
 
 
@@ -32,8 +27,7 @@ class ContractWriter : AppCompatActivity() {
                     {
                         Toast.makeText(applicationContext,"You have successfully rented this car",Toast.LENGTH_LONG).show()
 
-                      //  resultIntent.putExtra("code","carWasRented")
-                      //  setResult(Activity.RESULT_OK,resultIntent)
+
                         this.intent.putExtra("code","carWasRented")
                           setResult(Activity.RESULT_OK,this.intent)
                     this.finish()
@@ -41,8 +35,7 @@ class ContractWriter : AppCompatActivity() {
                     { _ ->
 
                         Toast.makeText(this, "An error occured. Check rental log!", Toast.LENGTH_LONG).show()
-                       // resultIntent.putExtra("code","ERROR")
-                       // setResult(Activity.RESULT_CANCELED,resultIntent)
+
                         this.intent.putExtra("code","ERROR")
                         setResult(Activity.RESULT_CANCELED,this.intent)
                         this.finish()

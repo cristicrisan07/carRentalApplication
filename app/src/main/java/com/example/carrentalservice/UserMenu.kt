@@ -30,12 +30,15 @@ class UserMenu : AppCompatActivity() {
         subsbtn.setOnClickListener {
             val intent =Intent(this,ChooseOptionActivity::class.java)
             intent.putExtra("uID",userID.toString())
-            startActivity(intent)
+            startActivityForResult(intent, LAUCH_CHOOSE_OPTION)
         }
         val endBtn=findViewById<Button>(R.id.endBtn)
         endBtn.setOnClickListener {
              val delivered=Intent(this,MarkAsDelivered::class.java)
+            delivered.putExtra("subscription",userStatus.getJSONObject(0).getString("subStatus"))
             delivered.putExtra("map",this.intent.extras!!.get("map") as ArrayList<*>)
+            delivered.putExtra("uID",userID.toString())
+            delivered.putExtra("VIN",userStatus.getJSONObject(3).getString("VIN"))
             startActivityForResult(delivered, LAUNCH_MARK_AS_DELIVERED)
         }
         if(userStatus.getJSONObject(0).getString("subStatus")=="notSubscribed")
@@ -53,12 +56,11 @@ class UserMenu : AppCompatActivity() {
 
         if(userStatus.getJSONObject(1).getString("agreeStatus")=="nocarRented"){
             endBtn.visibility= INVISIBLE
-            contrViewText="No car rented."
+            contrViewText="No active rentals."
             contrView.text=contrViewText
         }
         else{
             var carInfo=userStatus.getJSONObject(3)
-            val VIN=carInfo.getString("VIN")
             val prodYear=carInfo.getString("Year")
             val pricePerKm=carInfo.getString("Price")
             val batteryLevel=carInfo.getString("Battery")
@@ -89,19 +91,51 @@ class UserMenu : AppCompatActivity() {
     companion object {
 
         private const val LAUNCH_MARK_AS_DELIVERED = 4
+        private const val LAUCH_CHOOSE_OPTION=3
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
     if(requestCode== LAUNCH_MARK_AS_DELIVERED){
         if(resultCode==RESULT_OK){
-            Toast.makeText(applicationContext,"Thanks for choosing our services!",Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext,"Thank you for choosing our services!",Toast.LENGTH_LONG).show()
+            val contrView=findViewById<TextView>(R.id.tw3)
+            val contrViewText="No active rentals."
+            contrView.text=contrViewText
+            val endBtn=findViewById<Button>(R.id.endBtn)
+            endBtn.visibility= INVISIBLE
         }
         else{
 
         }
     }
         else{
+            if(requestCode== LAUCH_CHOOSE_OPTION){
+                if(resultCode==RESULT_OK){
+                   val type=data!!.getStringExtra("type").toString()
+                    var subViewText=""
+                    val subView=findViewById<TextView>(R.id.tw2)
+                    val subsbtn=findViewById<Button>(R.id.subButton)
+                    subsbtn.visibility= INVISIBLE
+                    subViewText = if(type=="22go"){
+                        "You have a $type subscription that expires in 2 days"
+                    } else{
+                        if(type=="72go") {
+                            "You have a $type subscription that expires in 7 days"
+                        } else{
+                            "You have a $type subscription that expires in 30 days"
+                        }
+                    }
+                subView.text=subViewText
+                }
+                else{
+
+                }
+        }
+
+               else{
+
+        }
 
         }
     }
