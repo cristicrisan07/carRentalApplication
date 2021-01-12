@@ -21,6 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.416"
         app:srcCompat="@drawable/unt" />
 
     <TextView
@@ -29,7 +30,6 @@
         android:layout_height="18dp"
         android:layout_marginStart="96dp"
         android:layout_marginLeft="96dp"
-        android:layout_marginTop="548dp"
         android:layout_marginEnd="33dp"
         android:layout_marginRight="33dp"
         android:text="Don`t have an account? Register"
@@ -39,8 +39,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/passBtn"
@@ -48,19 +47,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="58dp"
         android:layout_marginLeft="58dp"
-        android:layout_marginTop="493dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="276dp"
         android:layout_marginRight="276dp"
-        android:layout_marginBottom="219dp"
         android:background="@android:color/transparent"
         android:text="Password:"
         android:textAllCaps="true"
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/userBtn" />
 
     <TextView
         android:id="@+id/userBtn"
@@ -68,10 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="58dp"
         android:layout_marginLeft="58dp"
-        android:layout_marginTop="442dp"
-        android:layout_marginEnd="279dp"
-        android:layout_marginRight="279dp"
-        android:layout_marginBottom="270dp"
+        android:layout_marginTop="28dp"
         android:background="@color/common_google_signin_btn_tint"
         android:text="Username:"
         android:textAllCaps="true"
@@ -79,36 +73,32 @@
         android:textColorLink="#CEECCF"
         android:textSize="14sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
     <EditText
         android:id="@+id/passInsert"
         android:layout_width="122dp"
-        android:layout_height="30dp"
+        android:layout_height="41dp"
         android:layout_marginStart="135dp"
         android:layout_marginLeft="135dp"
-        android:layout_marginTop="487dp"
-        android:layout_marginBottom="214dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/userInsert" />
 
     <EditText
         android:id="@+id/userInsert"
-        android:layout_width="122dp"
-        android:layout_height="30dp"
+        android:layout_width="124dp"
+        android:layout_height="41dp"
         android:layout_marginStart="135dp"
         android:layout_marginLeft="135dp"
-        android:layout_marginTop="436dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
     <Button
         android:id="@+id/loginBtn"
@@ -116,7 +106,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="276dp"
         android:layout_marginLeft="276dp"
-        android:layout_marginTop="482dp"
+        android:layout_marginTop="10dp"
         android:text="LOGIN"
         android:textAllCaps="true"
         android:textColor="@color/black"
@@ -126,7 +116,7 @@
         android:textSize="14sp"
         app:backgroundTint="#009933"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/login_img" />
 
     <ImageView
         android:id="@+id/login_img"
@@ -134,9 +124,9 @@
         android:layout_height="50dp"
         android:layout_marginStart="274dp"
         android:layout_marginLeft="274dp"
-        android:layout_marginTop="422dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView13"
         app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
