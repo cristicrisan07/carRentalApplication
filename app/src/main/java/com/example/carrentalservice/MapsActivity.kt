@@ -313,7 +313,7 @@ mo=MarkerOptions().position(transilvaniei48_aiud).title("Bulevardul Transilvanie
             nextAct.putExtra("lastName", this.intent.extras!!.get("lastName").toString())
             nextAct.putExtra("serverResponse", serverResponse)
             nextAct.putExtra("map",locationList)
-            startActivity(nextAct)
+            startActivityForResult(nextAct, LAUNCH_USER_MENU)
         }
 
         mMap.setOnInfoWindowClickListener {
@@ -358,6 +358,7 @@ mo=MarkerOptions().position(transilvaniei48_aiud).title("Bulevardul Transilvanie
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
         private const val LAUNCH_CAR_LIST = 2
+        private const val LAUNCH_USER_MENU=7
 
     }
 
@@ -403,8 +404,12 @@ private fun refreshUserInfo(){
                 }
             }
         } else {
-            refreshUserInfo()
-        }
+            if(requestCode== LAUNCH_USER_MENU) {
+            if(resultCode==Activity.RESULT_OK)
+                { refreshUserInfo() }
+            }
+
+            }
 
     }
 }

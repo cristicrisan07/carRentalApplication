@@ -1,13 +1,13 @@
 package com.example.carrentalservice
 
+import android.app.Activity
 import android.content.Intent
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.view.View.INVISIBLE
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import org.json.JSONArray
 import java.sql.Date
 import kotlin.properties.Delegates
@@ -17,12 +17,13 @@ class UserMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_menu)
+        setResult(Activity.RESULT_OK)
         val userID=this.intent.extras!!.get("user_id")
         val fullname:String=this.intent.extras!!.get("firstName").toString()+" "+this.intent.extras!!.get("lastName").toString()
-        val tv1=findViewById<TextView>(R.id.tw1)
-        tv1.text=fullname
+        val tv4=findViewById<TextView>(R.id.tw4)
+        tv4.text=fullname
         val userStatus=JSONArray(this.intent.extras!!.get("serverResponse").toString())
-        val subsbtn=findViewById<Button>(R.id.subButton)
+        val subsbtn=findViewById<ImageButton>(R.id.subBtn)
         var subViewText:String?=null
         val subView=findViewById<TextView>(R.id.tw2)
         val contrView=findViewById<TextView>(R.id.tw3)
@@ -32,7 +33,7 @@ class UserMenu : AppCompatActivity() {
             intent.putExtra("uID",userID.toString())
             startActivityForResult(intent, LAUCH_CHOOSE_OPTION)
         }
-        val endBtn=findViewById<Button>(R.id.endBtn)
+        val endBtn=findViewById<ImageButton>(R.id.endBtn)
         endBtn.setOnClickListener {
              val delivered=Intent(this,MarkAsDelivered::class.java)
             delivered.putExtra("subscription",userStatus.getJSONObject(0).getString("subStatus"))
@@ -56,8 +57,11 @@ class UserMenu : AppCompatActivity() {
 
         if(userStatus.getJSONObject(1).getString("agreeStatus")=="nocarRented"){
             endBtn.visibility= INVISIBLE
-            contrViewText="No active rentals."
-            contrView.text=contrViewText
+            val img=findViewById<ImageView>(R.id.imgV)
+            img.setImageResource(R.drawable.no_car_rented)
+            contrView.visibility= INVISIBLE
+            val tw1=findViewById<TextView>(R.id.tw1)
+            tw1.visibility= INVISIBLE
         }
         else{
             var carInfo=userStatus.getJSONObject(3)
@@ -70,21 +74,47 @@ class UserMenu : AppCompatActivity() {
             carInfo=userStatus.getJSONObject(2)
             val departureLocation=carInfo.getString("departure")
             val rand= Random.nextInt(2,100)
-            var priceUntilNow:String=(pricePerKm.toDouble() * rand).toString()
+            var priceUntilNow:String=(pricePerKm.toDouble() * rand).toString()+"€"
 
-            if(userStatus.getJSONObject(0).getString("subStatus")!="notSubscribed")
-            {
-                priceUntilNow=""
+
+
+            if(userStatus.getJSONObject(0).getString("subStatus")!="notSubscribed"){
+                priceUntilNow="none"
             }
+            contrViewText= "Bill: $priceUntilNow"
 
+            val img=findViewById<ImageView>(R.id.imgV)
+            if (model == "ForTwo EQ") {
+                img.setImageResource(R.drawable.smf2)
+            } else {
+                if (model == "Zoe") {
+                    img.setImageResource(R.drawable.zoe)
 
-            contrViewText="You are driving:\n $manufacturer $model from $prodYear.\n " +
-                    "You started your ride from: $departureLocation.\n" +
-                    "Battery level: $batteryLevel% \n " +
-                    "You have to pay $priceUntilNow euros until now."
+                } else {
+                    if (model == "Cooper SE") {
+                        img.setImageResource(R.drawable.minise)
+                    } else {
+                        if (model == "eLeaf") {
+                            img.setImageResource(R.drawable.eleaf)
+                        } else {
+                            if (model == "i3") {
+                                img.setImageResource(R.drawable.i3)
+                            } else {
+                                if (model == "Model 3") {
+                                    img.setImageResource(R.drawable.model3)
+                                } else {
+                                    img.setImageResource(R.drawable.models)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         subView.text=subViewText
         contrView.text=contrViewText
+
+
 
 
     }
@@ -100,9 +130,10 @@ class UserMenu : AppCompatActivity() {
         if(resultCode==RESULT_OK){
             Toast.makeText(applicationContext,"Thank you for choosing our services!",Toast.LENGTH_LONG).show()
             val contrView=findViewById<TextView>(R.id.tw3)
-            val contrViewText="No active rentals."
-            contrView.text=contrViewText
-            val endBtn=findViewById<Button>(R.id.endBtn)
+            contrView.visibility= INVISIBLE
+            val tw1=findViewById<TextView>(R.id.tw1)
+            tw1.visibility= INVISIBLE
+            val endBtn=findViewById<ImageButton>(R.id.endBtn)
             endBtn.visibility= INVISIBLE
         }
         else{
@@ -112,10 +143,11 @@ class UserMenu : AppCompatActivity() {
         else{
             if(requestCode== LAUCH_CHOOSE_OPTION){
                 if(resultCode==RESULT_OK){
+
                    val type=data!!.getStringExtra("type").toString()
                     var subViewText=""
                     val subView=findViewById<TextView>(R.id.tw2)
-                    val subsbtn=findViewById<Button>(R.id.subButton)
+                    val subsbtn=findViewById<ImageButton>(R.id.subBtn)
                     subsbtn.visibility= INVISIBLE
                     subViewText = if(type=="22go"){
                         "You have a $type subscription that expires in 2 days"
