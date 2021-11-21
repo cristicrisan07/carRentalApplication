@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
             val password=findViewById<TextView>(R.id.passInsert)
 
 
-            val logUrl="http://34.107.31.239/login.php"
+            val logUrl="http://10.0.2.2:8080/uploads/login.php"
             val stringRequest: StringRequest = object: StringRequest(Method.POST,
                     logUrl,
                     { response->
@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
                     },
                     {error->
 
-                        Toast.makeText(this,"nu a mers",Toast.LENGTH_LONG).show()
+                        Toast.makeText(this,error.message,Toast.LENGTH_LONG).show()
                     }){
 
                 override fun getParams(): MutableMap<String, String> {

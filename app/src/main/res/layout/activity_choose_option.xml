@@ -51,13 +51,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView17">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="27dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
         <RadioButton
             android:id="@+id/btn_22go"
-            android:layout_width="127dp"
+            android:layout_width="40dp"
             android:layout_height="47dp"
             android:textAllCaps="false"
             android:textColor="#050505"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <RadioButton
             android:id="@+id/btn_72go"
@@ -69,15 +81,27 @@
             android:textColor="#0C0C0C"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
         <RadioButton
             android:id="@+id/btn_honeyMoon"
-            android:layout_width="127dp"
+            android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:textAllCaps="false"
             android:textColor="#151515"
             android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
     </RadioGroup>
 
     <ImageView

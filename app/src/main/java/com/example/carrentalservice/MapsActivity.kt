@@ -48,7 +48,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         try {
             val uID = this.intent.extras!!.get("user_id").toString()
             findViewById<TextView>(R.id.notloggedin).text = ""
-            val logUrl = "http://34.107.31.239/UserSubsContr.php"
+            val logUrl = "http://10.0.2.2:8080/uploads/UserSubsContr.php"
             val stringRequest: StringRequest = object : StringRequest(Method.POST,
                     logUrl,
                     { response ->
@@ -57,9 +57,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
 
 
                     },
-                    { _ ->
+                    { error ->
 
-                        Toast.makeText(this, "nu a mers", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this,error.message.toString(), Toast.LENGTH_LONG).show()
                     }) {
 
                 override fun getParams(): MutableMap<String, String> {
@@ -108,7 +108,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
 
             if (findViewById<TextView>(R.id.notloggedin).text != "Not logged in") {
 
-                val logUrl = "http://34.107.31.239/retrieveCars.php"
+                val logUrl = "http://10.0.2.2:8080/uploads/retrieveCars.php"
                 var location = it.title.toString()
 
                 val stringRequest: StringRequest = object : StringRequest(Method.POST,
@@ -375,14 +375,14 @@ mo=MarkerOptions().position(transilvaniei48_aiud).title("Bulevardul Transilvanie
 
 private fun refreshUserInfo(){
     val uID = this.intent.extras!!.get("user_id").toString()
-    val logUrl = "http://34.107.31.239/UserSubsContr.php"
+    val logUrl = "http://10.0.2.2:8080/uploads/UserSubsContr.php"
     val stringRequest: StringRequest = object : StringRequest(Method.POST,
             logUrl,
             { response ->
                 serverResponse = response
             },
-            { _ ->
-                Toast.makeText(this, "nu a mers", Toast.LENGTH_LONG).show()
+            { error ->
+                Toast.makeText(this, error.message.toString(), Toast.LENGTH_LONG).show()
             }) {
 
         override fun getParams(): MutableMap<String, String> {

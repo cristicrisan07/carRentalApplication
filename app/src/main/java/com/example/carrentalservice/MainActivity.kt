@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             Validator.isValidCNP(myTxtCNP,true)
             if(Validator.isValidName(myTxtLastName,true) && Validator.isValidName(myTxtFirstName,true) && Validator.isValidPassword(myTxtPassword,true) && Validator.isValidCNP(myTxtCNP,true) && Validator.isValidAddres(myTxtAddress,true) && Validator.isValidEmail(myTxtEmail,true))
             {
-                val reg_url="http://34.107.31.239/register.php"
+                val reg_url="http://10.0.2.2:8080/uploads/register.php"
                 val stringRequest: StringRequest = object: StringRequest(
                     Method.POST,
                     reg_url,

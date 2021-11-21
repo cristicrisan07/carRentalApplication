@@ -34,7 +34,7 @@ class ChooseOptionActivity : AppCompatActivity() {
                 }
 
             val uID = this.intent.extras!!.get("uID").toString()
-            val logUrl = "http://34.107.31.239/Subscribe.php"
+            val logUrl = "http://10.0.2.2:8080/uploads/Subscribe.php"
             val stringRequest: StringRequest = object : StringRequest(Method.POST,
                     logUrl,
                     { response ->

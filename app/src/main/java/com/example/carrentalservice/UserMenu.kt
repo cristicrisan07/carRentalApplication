@@ -135,6 +135,8 @@ class UserMenu : AppCompatActivity() {
             tw1.visibility= INVISIBLE
             val endBtn=findViewById<ImageButton>(R.id.endBtn)
             endBtn.visibility= INVISIBLE
+            val img=findViewById<ImageView>(R.id.imgV)
+            img.setImageResource(R.drawable.no_car_rented)
         }
         else{
 

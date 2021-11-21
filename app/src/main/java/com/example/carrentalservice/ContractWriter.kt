@@ -21,7 +21,7 @@ class ContractWriter : AppCompatActivity() {
 
             val vin=this.intent.extras!!.get("VIN").toString()
             val id= this.intent.extras!!.get("user_id").toString()
-            val logUrl = "http://34.107.31.239/contractUpload.php"
+            val logUrl = "http://10.0.2.2:8080/uploads/contractUpload.php"
             val stringRequest: StringRequest = object : StringRequest(Method.POST,
                     logUrl,
                     {

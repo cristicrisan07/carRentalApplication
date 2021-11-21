@@ -62,7 +62,7 @@ class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMark
             }
             val uID = this.intent.extras!!.get("uID").toString()
             val VIN = this.intent.extras!!.get("VIN").toString()
-            val logUrl = "http://34.107.31.239/Park.php"
+            val logUrl = "http://10.0.2.2:8080/uploads/Park.php"
             val stringRequest: StringRequest = object : StringRequest(Method.POST,
                     logUrl,
                     {response ->
