@@ -1,15 +1,13 @@
 package com.example.carrentalservice
 
-import android.icu.text.SimpleDateFormat
-import android.net.ParseException
 import android.os.Build
 import android.util.Patterns
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import com.google.android.material.textfield.TextInputLayout
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -35,6 +33,8 @@ class Validator {
         private val CNP_VALIDATION_MSG = "Enter a valid CNP number"
         private val ADDRESS_VALIDATION_MSG = "Enter a valid address"
         private val DRIVING_LICENSE_VALIDATION_MSG = "Enter a valid address"
+        private val PAYMENT_VALIDATION_MSG = "YOUR CARD IS EXPIRED. TRY TO PAY USING ANOTHER METHOD"
+
 
         /**
          * Retrieve string data from the parameter.

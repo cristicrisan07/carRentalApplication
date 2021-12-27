@@ -49,7 +49,7 @@ class CustomAdapter(var context:Context,var car:ArrayList<Cars>):BaseAdapter() {
     }
 
     override fun getItem(position: Int): Any {
-        return car.get(position)
+        return car[position]
     }
 
     override fun getItemId(position: Int): Long {

@@ -1,6 +1,7 @@
 package com.example.carrentalservice
 
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -59,6 +60,8 @@ class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMark
             val location=it.title
             if(this.intent.extras!!.get("subscription").toString()!="isSubscribed"){
                 Toast.makeText(applicationContext,"You will be redirected to the payment processor...",Toast.LENGTH_LONG).show()
+
+                startActivity(Intent(this,Payment::class.java).putExtra("Money",this.intent.extras!!.get("Money").toString()))
             }
             val uID = this.intent.extras!!.get("uID").toString()
             val VIN = this.intent.extras!!.get("VIN").toString()
