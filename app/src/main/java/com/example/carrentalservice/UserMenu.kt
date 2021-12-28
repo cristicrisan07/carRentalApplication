@@ -40,6 +40,13 @@ class UserMenu : AppCompatActivity() {
             delivered.putExtra("map",this.intent.extras!!.get("map") as ArrayList<*>)
             delivered.putExtra("uID",userID.toString())
             delivered.putExtra("VIN",userStatus.getJSONObject(3).getString("VIN"))
+            var priceUntilNow="0"
+            if(userStatus.getJSONObject(1).getString("agreeStatus")!="nocarRented"){
+            var carInfo=userStatus.getJSONObject(3)
+            val pricePerKm=carInfo.getString("Price")
+            val rand= Random.nextInt(2,100)
+            priceUntilNow=(pricePerKm.toDouble() * rand).toString()+"€"}
+            delivered.putExtra("price",priceUntilNow)
             startActivityForResult(delivered, LAUNCH_MARK_AS_DELIVERED)
         }
         if(userStatus.getJSONObject(0).getString("subStatus")=="notSubscribed")

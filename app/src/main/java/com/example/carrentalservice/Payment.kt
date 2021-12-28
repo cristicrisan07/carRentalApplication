@@ -1,5 +1,6 @@
 package com.example.carrentalservice
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.android.volley.toolbox.StringRequest
 import java.time.LocalDateTime
 import kotlin.random.Random
 
@@ -50,12 +52,46 @@ class Payment : AppCompatActivity() {
 
             if (valid) {
                 var chance = Random.nextInt(9)
-                status = if (chance < 3)
-                    PaymentStatus.SUCCESS
-                else PaymentStatus.FAILURE
+                status = if (chance < 2)
+                    PaymentStatus.FAILURE
+                else PaymentStatus.SUCCESS
                 if (status == PaymentStatus.SUCCESS) {
                     Toast.makeText(this, "Payment Successful", Toast.LENGTH_LONG).show()
-                    this.finish()
+                    val price =this.intent.extras!!.get("price").toString()
+                    val uID = this.intent.extras!!.get("uID").toString()
+                    val VIN = this.intent.extras!!.get("VIN").toString()
+                    val location=this.intent.extras!!.get("location").toString()
+                    val logUrl = "http://10.0.2.2:8080/uploads/Park.php"
+                    val stringRequest: StringRequest = object : StringRequest(
+                        Method.POST,
+                        logUrl,
+                        {response ->
+                            if(response=="Delivered!")
+                            {setResult(Activity.RESULT_OK)}
+                            else{
+                                if(response=="No such address!")
+                                {
+                                    Toast.makeText(applicationContext,"No such address PHP error; contact support!",Toast.LENGTH_LONG).show()
+                                    setResult(Activity.RESULT_CANCELED)
+                                }
+                            }
+                            this.finish()
+                        },
+                        {
+                            Toast.makeText(this, "Could not subscribe!", Toast.LENGTH_LONG).show()
+                        }) {
+
+                        override fun getParams(): MutableMap<String, String> {
+                            val params = HashMap<String, String>()
+                            params["idClient"]=uID
+                            params["location"]=location
+                            params["vin"]=VIN
+                            params["amount"]=price
+                            return params
+                        }
+
+                    }
+                    MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
                 } else {
                     Toast.makeText(this, "Payment Error. Retry Payment.", Toast.LENGTH_LONG).show()
                 }

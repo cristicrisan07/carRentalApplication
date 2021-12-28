@@ -58,15 +58,23 @@ class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMark
 
         mMap.setOnInfoWindowClickListener {
             val location=it.title
-            if(this.intent.extras!!.get("subscription").toString()!="isSubscribed"){
-                Toast.makeText(applicationContext,"You will be redirected to the payment processor...",Toast.LENGTH_LONG).show()
-
-                startActivity(Intent(this,Payment::class.java).putExtra("Money",this.intent.extras!!.get("Money").toString()))
-            }
             val uID = this.intent.extras!!.get("uID").toString()
             val VIN = this.intent.extras!!.get("VIN").toString()
-            val logUrl = "http://10.0.2.2:8080/uploads/Park.php"
-            val stringRequest: StringRequest = object : StringRequest(Method.POST,
+            val price = if(this.intent.extras!!.get("subscription").toString()!="isSubscribed") this.intent.extras!!.get("price").toString() else "subscribed"
+
+            if(this.intent.extras!!.get("subscription").toString()!="isSubscribed"){
+                Toast.makeText(applicationContext,"You will be redirected to the payment processor...",Toast.LENGTH_LONG).show()
+                val nextAct=Intent(this,Payment::class.java)
+                nextAct.putExtra("uID",uID)
+                nextAct.putExtra("VIN",VIN)
+                nextAct.putExtra("location",location)
+                nextAct.putExtra("price",price)
+                startActivity(nextAct)
+            }
+            else{
+                val logUrl = "http://10.0.2.2:8080/uploads/Park.php"
+                val stringRequest: StringRequest = object : StringRequest(
+                    Method.POST,
                     logUrl,
                     {response ->
                         if(response=="Delivered!")
@@ -84,16 +92,19 @@ class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMark
                         Toast.makeText(this, "Could not subscribe!", Toast.LENGTH_LONG).show()
                     }) {
 
-                override fun getParams(): MutableMap<String, String> {
-                    val params = HashMap<String, String>()
-                    params["idClient"]=uID
-                    params["location"]=location
-                    params["vin"]=VIN
-                    return params
-                }
+                    override fun getParams(): MutableMap<String, String> {
+                        val params = HashMap<String, String>()
+                        params["idClient"]=uID
+                        params["location"]=location
+                        params["vin"]=VIN
+                        params["amount"]=price
+                        return params
+                    }
 
+                }
+                MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
             }
-            MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
+
         }
 
     }
