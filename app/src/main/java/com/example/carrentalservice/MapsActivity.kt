@@ -32,7 +32,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var serverResponse: String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
@@ -305,15 +304,63 @@ mo=MarkerOptions().position(transilvaniei48_aiud).title("Bulevardul Transilvanie
 
         val userMenu: ImageButton = findViewById(R.id.userMenu)
 
-
         userMenu.setOnClickListener {
+            var userType=  this.intent.extras!!.get("isAdmin").toString()
+
+            if(userType=="0"){
             val nextAct = Intent(this, UserMenu::class.java)
             nextAct.putExtra("user_id", this.intent.extras!!.get("user_id").toString())
             nextAct.putExtra("firstName", this.intent.extras!!.get("firstName").toString())
             nextAct.putExtra("lastName", this.intent.extras!!.get("lastName").toString())
             nextAct.putExtra("serverResponse", serverResponse)
             nextAct.putExtra("map",locationList)
-            startActivityForResult(nextAct, LAUNCH_USER_MENU)
+            startActivityForResult(nextAct, LAUNCH_USER_MENU)}
+            else{
+                val logUrl = "http://10.0.2.2:8080/uploads/retrieveCars.php"
+                var location = "null"
+
+                val stringRequest: StringRequest = object : StringRequest(Method.POST,
+                    logUrl,
+                    { response ->
+                        carQuery=response
+                        val intent = Intent(this, AdminView::class.java)
+
+
+                        val jsonarr = JSONArray(carQuery)
+                        val jsonobj = ArrayList<JSONObject>()
+                        for (i in 0 until jsonarr.length()) {
+                            jsonobj.add(jsonarr.getJSONObject(i))
+                        }
+                        for (i in 0 until jsonobj.size) {
+                            intent.putExtra(i.toString(), jsonobj[i].getString("VIN"))
+                            intent.putExtra("manufacturer$i", jsonobj[i].getString("manufacturer"))
+                            intent.putExtra("model$i", jsonobj[i].getString("model"))
+                            intent.putExtra("Year$i", jsonobj[i].getString("Year"))
+                            intent.putExtra("Price$i", jsonobj[i].getString("Price"))
+                            intent.putExtra("Battery$i", jsonobj[i].getString("Battery"))
+                            intent.putExtra("nrOfCars",jsonobj.size)
+                            intent.putExtra("hasCar",JSONArray(serverResponse).getJSONObject(1).getString("agreeStatus"))
+                        }
+
+                        startActivity(intent)
+                    },
+                    { _ ->
+
+                        Toast.makeText(this, "Unable to retrieve data for this location. Contact support!", Toast.LENGTH_LONG).show()
+                    }) {
+
+                    override fun getParams(): MutableMap<String, String> {
+                        val params = HashMap<String, String>()
+                        params["Location"] = location
+                        return params
+                    }
+
+                }
+                MySingleton.MySingleton.getInstance(this).addToRequestQueue(stringRequest)
+
+
+
+            }
         }
 
         mMap.setOnInfoWindowClickListener {

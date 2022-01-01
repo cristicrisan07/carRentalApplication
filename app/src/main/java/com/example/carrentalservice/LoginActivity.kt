@@ -37,12 +37,14 @@ class LoginActivity : AppCompatActivity() {
                         val firstName=jsonobj.getString("first_name")
                         val lastName=jsonobj.getString("last_name")
                         val userID=jsonobj.getString("user_id")
+                        val isAdmin=jsonobj.getString("isAdmin")
 
                                 Toast.makeText(this@LoginActivity,"Welcome $firstName $lastName",Toast.LENGTH_LONG).show()
                                    val intent= Intent(this,MapsActivity::class.java)
                             intent.putExtra("user_id", userID)
                             intent.putExtra("firstName",firstName)
                             intent.putExtra("lastName",lastName)
+                            intent.putExtra("isAdmin",isAdmin)
                             startActivity(intent)
                         }
                         else{

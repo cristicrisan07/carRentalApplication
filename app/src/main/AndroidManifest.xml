@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CarRentalService">
         <activity
+            android:name=".AdminView"
+            android:exported="false" />
+        <activity
             android:name=".Payment"
             android:exported="false" />
         <activity
