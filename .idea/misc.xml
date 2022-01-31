@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/carRentalService/app/src/main/res/layout/activity_admin_view.xml" value="0.536" />
+        <entry key="..\:/AndroidStudioProjects/carRentalService/app/src/main/res/layout/activity_login.xml" value="0.25833333333333336" />
         <entry key="..\:/AndroidStudioProjects/carRentalService/app/src/main/res/layout/activity_mark_as_delivered.xml" value="0.259375" />
         <entry key="..\:/AndroidStudioProjects/carRentalService/app/src/main/res/layout/activity_payment.xml" value="0.6" />
         <entry key="..\:/AndroidStudioProjects/carRentalService/app/src/main/res/layout/activity_second.xml" value="0.259375" />
