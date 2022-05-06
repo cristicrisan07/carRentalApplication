@@ -1,16 +1,13 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.View
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.widget.SwitchCompat
-import androidx.core.view.isVisible
+import com.example.carrentalservice.Model.Cars
+import com.example.carrentalservice.Service.CustomAdapter
+import com.example.carrentalservice.R
 import kotlin.random.Random
 
 class AdminView : AppCompatActivity() {

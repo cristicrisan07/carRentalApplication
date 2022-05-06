@@ -18,23 +18,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CarRentalService">
         <activity
-            android:name=".AdminView"
+            android:name=".View.AdminView"
             android:exported="false" />
         <activity
-            android:name=".Payment"
+            android:name=".View.Payment"
             android:exported="false" />
         <activity
-            android:name=".MarkAsDelivered"
+            android:name=".View.MarkAsDelivered"
             android:theme="@style/Theme.Transparent">
 
             <!-- android:theme="@style/Theme.AppCompat.Dialog" -->
 
         </activity>
-        <activity android:name=".ChooseOptionActivity" />
-        <activity android:name=".UserMenu" />
-        <activity android:name=".ContractWriter" />
+        <activity android:name=".View.ChooseOptionActivity" />
+        <activity android:name=".View.UserMenu" />
+        <activity android:name=".Service.ContractWriter" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".View.LoginActivity"
             android:theme="@style/Theme.TransparentBis" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -49,11 +49,11 @@
             android:value="AIzaSyBRYm53IOQdBTVdpirAXsX68x8SKhE8Xi8" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".View.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SecondActivity" />
-        <activity android:name=".FirstActivity">
+        <activity android:name=".View.MainActivity" />
+        <activity android:name=".View.SecondActivity" />
+        <activity android:name=".View.FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

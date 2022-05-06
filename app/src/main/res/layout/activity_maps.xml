@@ -17,7 +17,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginTop="3dp"
-        tools:context=".MapsActivity" />
+        tools:context=".View.MapsActivity" />
 
     <TextView
         android:id="@+id/notloggedin"

@@ -5,7 +5,7 @@
     android:id="@+id/Constr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstActivity">
+    tools:context=".View.FirstActivity">
 
     <ImageView
         android:id="@+id/imageView"

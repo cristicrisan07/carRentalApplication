@@ -1,18 +1,17 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.View
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.android.volley.toolbox.StringRequest
-import com.example.carrentalservice.MySingleton.MySingleton.Companion.getInstance
+import com.example.carrentalservice.Service.MySingleton.MySingleton.Companion.getInstance
 import com.example.carrentalservice.R
+import com.example.carrentalservice.Service.Validator
 import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
@@ -31,17 +30,27 @@ class MainActivity : AppCompatActivity() {
         val myTxtUsername=findViewById<TextView>(R.id.username_text)
         val haveAcc=findViewById<TextView>(R.id.haveAcc)
         haveAcc.setOnClickListener {
-            val intent =Intent(this,LoginActivity::class.java)
+            val intent =Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
         myButton.setOnClickListener {
-            Validator.isValidName(myTxtLastName,true)
-            Validator.isValidName(myTxtFirstName,true)
-            Validator.isValidEmail(myTxtEmail,true)
-            Validator.isValidAddres(myTxtAddress,true)
-            Validator.isValidPassword(myTxtPassword,true)
-            Validator.isValidCNP(myTxtCNP,true)
-            if(Validator.isValidName(myTxtLastName,true) && Validator.isValidName(myTxtFirstName,true) && Validator.isValidPassword(myTxtPassword,true) && Validator.isValidCNP(myTxtCNP,true) && Validator.isValidAddres(myTxtAddress,true) && Validator.isValidEmail(myTxtEmail,true))
+            Validator.isValidName(myTxtLastName, true)
+            Validator.isValidName(myTxtFirstName, true)
+            Validator.isValidEmail(myTxtEmail, true)
+            Validator.isValidAddres(myTxtAddress, true)
+            Validator.isValidPassword(myTxtPassword, true)
+            Validator.isValidCNP(myTxtCNP, true)
+            if(Validator.isValidName(myTxtLastName, true) && Validator.isValidName(
+                    myTxtFirstName,
+                    true
+                ) && Validator.isValidPassword(
+                    myTxtPassword,
+                    true
+                ) && Validator.isValidCNP(myTxtCNP, true) && Validator.isValidAddres(
+                    myTxtAddress,
+                    true
+                ) && Validator.isValidEmail(myTxtEmail, true)
+            )
             {
                 val reg_url="http://10.0.2.2:8080/uploads/register.php"
                 val stringRequest: StringRequest = object: StringRequest(
@@ -55,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "$code $msg",Toast.LENGTH_LONG).show()
                         if(code!="reg_failed")
                         {
-                            val intent =Intent(this,LoginActivity::class.java)
+                            val intent =Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                         }
                     },

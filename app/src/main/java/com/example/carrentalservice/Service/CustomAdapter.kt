@@ -1,14 +1,14 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.Service
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import org.w3c.dom.Text
+import com.example.carrentalservice.Model.Cars
+import com.example.carrentalservice.R
 
 class CustomAdapter(var context:Context,var car:ArrayList<Cars>):BaseAdapter() {
     private class ViewHolder(row:View?)
@@ -26,12 +26,12 @@ class CustomAdapter(var context:Context,var car:ArrayList<Cars>):BaseAdapter() {
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view:View
-        var viewHolder:ViewHolder
+        var viewHolder: ViewHolder
         if(convertView==null)
         {
             var layout=LayoutInflater.from(context)
             view=layout.inflate(R.layout.cars_item_list,parent,false)
-            viewHolder=ViewHolder(view)
+            viewHolder= ViewHolder(view)
             view.tag=viewHolder
         }
         else
@@ -40,7 +40,7 @@ class CustomAdapter(var context:Context,var car:ArrayList<Cars>):BaseAdapter() {
             viewHolder=view.tag as ViewHolder
         }
 
-        var car:Cars=getItem(position) as Cars
+        var car: Cars =getItem(position) as Cars
         viewHolder.txtNameCar.text=car.name
         viewHolder.ivImage.setImageResource(car.image)
         viewHolder.txtDescription.text=car.description

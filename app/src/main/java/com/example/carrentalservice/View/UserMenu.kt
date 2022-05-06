@@ -1,16 +1,13 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.View
 
 import android.app.Activity
 import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
 import android.view.View.INVISIBLE
 import android.widget.*
+import com.example.carrentalservice.R
 import org.json.JSONArray
-import java.sql.Date
-import kotlin.properties.Delegates
 import kotlin.random.Random
 
 class UserMenu : AppCompatActivity() {
@@ -29,13 +26,13 @@ class UserMenu : AppCompatActivity() {
         val contrView=findViewById<TextView>(R.id.tw3)
         var contrViewText:String?=null
         subsbtn.setOnClickListener {
-            val intent =Intent(this,ChooseOptionActivity::class.java)
+            val intent =Intent(this, ChooseOptionActivity::class.java)
             intent.putExtra("uID",userID.toString())
             startActivityForResult(intent, LAUCH_CHOOSE_OPTION)
         }
         val endBtn=findViewById<ImageButton>(R.id.endBtn)
         endBtn.setOnClickListener {
-             val delivered=Intent(this,MarkAsDelivered::class.java)
+             val delivered=Intent(this, MarkAsDelivered::class.java)
             delivered.putExtra("subscription",userStatus.getJSONObject(0).getString("subStatus"))
             delivered.putExtra("map",this.intent.extras!!.get("map") as ArrayList<*>)
             delivered.putExtra("uID",userID.toString())

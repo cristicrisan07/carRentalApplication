@@ -1,7 +1,6 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.View
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,11 +9,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.android.volley.toolbox.StringRequest
+import com.example.carrentalservice.Service.MySingleton
+import com.example.carrentalservice.R
 import java.time.LocalDateTime
 import kotlin.random.Random
 
 class Payment : AppCompatActivity() {
-     var status =PaymentStatus.FAILURE
+     var status = PaymentStatus.FAILURE
     enum class PaymentStatus {
         SUCCESS, FAILURE
 

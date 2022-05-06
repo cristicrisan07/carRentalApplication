@@ -1,16 +1,17 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.View
 
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
-import kotlinx.coroutines.NonCancellable.cancel
+import com.example.carrentalservice.Model.Cars
+import com.example.carrentalservice.Service.ContractWriter
+import com.example.carrentalservice.Service.CustomAdapter
+import com.example.carrentalservice.R
 
 class SecondActivity : AppCompatActivity() {
     val LAUNCH_CONTRACT_WRITER = 1

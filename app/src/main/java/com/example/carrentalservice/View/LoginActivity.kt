@@ -1,6 +1,5 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.View
 
-import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.toolbox.StringRequest
+import com.example.carrentalservice.Service.MySingleton
+import com.example.carrentalservice.R
 import org.json.JSONArray
 
 class LoginActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
         val loginBtn=findViewById<Button>(R.id.loginBtn)
         val dontHaveAcc=findViewById<TextView>(R.id.noAccTxt)
         dontHaveAcc.setOnClickListener {
-            val intent =Intent(this,MainActivity::class.java)
+            val intent =Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         loginBtn.setOnClickListener {
@@ -40,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
                         val isAdmin=jsonobj.getString("isAdmin")
 
                                 Toast.makeText(this@LoginActivity,"Welcome $firstName $lastName",Toast.LENGTH_LONG).show()
-                                   val intent= Intent(this,MapsActivity::class.java)
+                                   val intent= Intent(this, MapsActivity::class.java)
                             intent.putExtra("user_id", userID)
                             intent.putExtra("firstName",firstName)
                             intent.putExtra("lastName",lastName)

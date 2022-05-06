@@ -1,11 +1,12 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.View
 
 import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import com.android.volley.toolbox.StringRequest
+import com.example.carrentalservice.Service.MySingleton
+import com.example.carrentalservice.R
 
 class ChooseOptionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

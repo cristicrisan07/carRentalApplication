@@ -1,10 +1,10 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.View
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.carrentalservice.ChooseOptionActivity
+import com.example.carrentalservice.R
 
 class Details_22go : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

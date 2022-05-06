@@ -1,4 +1,4 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.View
 
 import android.app.Activity
 import android.content.Intent
@@ -6,9 +6,10 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDialog
 import androidx.core.app.ActivityCompat
 import com.android.volley.toolbox.StringRequest
+import com.example.carrentalservice.Service.MySingleton
+import com.example.carrentalservice.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,7 +18,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.delay
 
 class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -64,7 +64,7 @@ class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMark
 
             if(this.intent.extras!!.get("subscription").toString()!="isSubscribed"){
                 Toast.makeText(applicationContext,"You will be redirected to the payment processor...",Toast.LENGTH_LONG).show()
-                val nextAct=Intent(this,Payment::class.java)
+                val nextAct=Intent(this, Payment::class.java)
                 nextAct.putExtra("uID",uID)
                 nextAct.putExtra("VIN",VIN)
                 nextAct.putExtra("location",location)
@@ -89,7 +89,7 @@ class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMark
                         this.finish()
                     },
                     {
-                        Toast.makeText(this, "Could not subscribe!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Could not deliver the car!", Toast.LENGTH_LONG).show()
                     }) {
 
                     override fun getParams(): MutableMap<String, String> {
@@ -116,7 +116,8 @@ class MarkAsDelivered:AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMark
         if (ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE
+            )
             return
         }
     }

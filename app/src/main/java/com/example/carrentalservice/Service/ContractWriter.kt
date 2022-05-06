@@ -1,14 +1,10 @@
-package com.example.carrentalservice
+package com.example.carrentalservice.Service
 
 import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import com.android.volley.toolbox.StringRequest
-import org.json.JSONArray
-import org.json.JSONObject
 
 class ContractWriter : AppCompatActivity() {
 
